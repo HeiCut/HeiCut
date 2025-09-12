@@ -1,6 +1,0 @@
-[submodule "extern/kahypar-shared-resources"]
-	path = extern/kahypar-shared-resources
-	url = https://github.com/kahypar/kahypar-shared-resources.git
-[submodule "extern/mt-kahypar"]
-	path = extern/mt-kahypar
-	url = https://github.com/kahypar/mt-kahypar
