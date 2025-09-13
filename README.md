@@ -234,7 +234,9 @@ Scripts are located in `/HeiCut/experiments/`, organized per dataset:
 - `large_weighted`, `large_unweighted`  
 - `k-core_weighted`, `k-core_unweighted`
 
-Each folder contains a master script (e.g., `perform_medium_weighted_experiments.sh`).  
+Each folder contains a master script (e.g., `perform_medium_weighted_experiments.sh`). 
+
+**Note:** we also provide a global script to run all experiments on all datasets called `perform_all_experiments.sh`. However, we do not recommend using it since it would be simply too time consuming.
 
 > **Dependency:** [GNU parallel](https://www.gnu.org/software/parallel/)  
 > Install on Ubuntu:  
@@ -268,6 +270,28 @@ Example:
 - `/kernelizer_IT1/all_results.csv` (HeiCut, with LP)  
 
 In the output `all_results.csv` for each algorithm, each row contains the statistics for an instance. The first three columns correspond to minimum cut, time, and memory respectively. If an algorithm fails on an instance, the minimum cut, time, and memory columns are blank. 
+
+---
+
+### Plotting Results
+
+The paper showcases experimental results in performance profiles. While the performance profiles used in the paper and very complicated due to varying x-axis scaling, it is possible to generate simpler performance profile plots using the script provided in the experiments folder:
+
+```bash
+python3 plot_results.py --data-dir <dataset>/generated/all_results/
+```
+
+Replace the path with the `all_results` folder of the dataset you wish to plot.  
+
+- The script produces a **PDF performance profile** saved in the same folder as `plot_results.py`.  
+- Run the script separately for each dataset (`medium_weighted`, `large_weighted`, `k-core_weighted`, etc.).  
+
+#### Requirements
+The plotting script depends on the following Python packages:
+
+```bash
+pip install numpy pandas matplotlib
+```
 
 ---
 
