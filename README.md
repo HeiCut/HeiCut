@@ -15,7 +15,7 @@ The algorithm performs repeated rounds of **provably exact reduction rules** tha
 HeiCut is presented in the paper:  
 > *Exact Minimum Cuts in Hypergraphs at Scale*, ALENEX 2026.
 
-This repository provides:
+The GitHub repository (https://github.com/HeiCut/HeiCut.git) provides:
 - Source code for **HeiCut**  
 - Implementations of competing algorithms: **Trimmer**, **Relaxed BIP**, and **ordering-based solvers**  
 - Benchmark datasets (`M_{HG}`, `L_{HG}`, and $(k,2)$-core)  
