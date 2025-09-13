@@ -19,6 +19,7 @@ struct BaseConfig
     int seed;
     mt_kahypar_preset_type_t presetType;
     size_t numThreads;
+    bool unweighted;
 };
 
 struct KernelizerConfig : BaseConfig

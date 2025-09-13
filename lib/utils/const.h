@@ -69,4 +69,7 @@ const EdgeIndex DEFAULT_DUMBBELL_MIN_DEGREE = 0;
 // Default option on whether the dumbbell hypergraph should be weighted
 const bool DEFAULT_DUMBBELL_WEIGHTED = false;
 
+// Default option on whether the hypergraph should be processed as unweighted
+const bool DEFAULT_UNWEIGHTED = false;
+
 #endif // end of SMHM_CONSTANTS_H

@@ -55,7 +55,14 @@ int main(int argc, char *argv[])
     EdgeIndex inputNumEdges = hypergraph.initialNumEdges() - hypergraph.numRemovedHyperedges();
     NodeIndex inputNumNodes = hypergraph.initialNumNodes() - hypergraph.numRemovedHypernodes();
 
+    if(config.unweighted) {
+        for (EdgeID edgeID : hypergraph.edges())
+        if (hypergraph.edgeIsEnabled(edgeID))
+        hypergraph.setEdgeWeight(edgeID, 1);
+    }
+
     std::cout << "seed \t\t\t\t\t" << config.seed << std::endl;
+    std::cout << "unweighted \t\t\t\t" << config.unweighted << std::endl;
     std::cout << "base_solver \t\t\t\t" << config.baseSolver << std::endl;
     if (config.baseSolver == BaseSolver::ILP)
     {

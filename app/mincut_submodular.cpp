@@ -57,14 +57,21 @@ int main(int argc, char *argv[])
 
     // Determine if the hypergraph has weighted edges
     bool hasWeightedEdges = false;
+    if(config.unweighted) {
+        for (EdgeID edgeID : hypergraph.edges())
+        if (hypergraph.edgeIsEnabled(edgeID))
+        hypergraph.setEdgeWeight(edgeID, 1);
+    } else {
     for (EdgeID edgeID : hypergraph.edges())
         if (hypergraph.edgeIsEnabled(edgeID) && hypergraph.edgeWeight(edgeID) != 1)
         {
             hasWeightedEdges = true;
             break;
         }
+    }
 
     std::cout << "seed \t\t\t\t\t" << config.seed << std::endl;
+    std::cout << "unweighted \t\t\t\t" << config.unweighted << std::endl;
     std::cout << "ordering_type \t\t\t\t" << config.orderingType << std::endl;
     std::cout << "ordering_mode \t\t\t\t" << config.orderingMode << std::endl;
     std::cout << "has_weighted_edges \t\t\t" << (hasWeightedEdges ? "true" : "false") << std::endl;

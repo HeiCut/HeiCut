@@ -28,12 +28,13 @@ struct BaseArgtable
     struct arg_int *seed = arg_int0(NULL, "seed", NULL, "Seed to use for PRNG. Default: 0.");
     struct arg_rex *presetType = arg_rex0(NULL, "preset_type", "^(deterministic|default)$", "fileFormat", REG_EXTENDED, "Preset type [deterministic|default] when reading the hypergraph. Default: deterministic.");
     struct arg_int *numThreads = arg_int0("t", "num_threads", NULL, "Number of threads used. 0 means all available cores are used. Default: 0.");
+    struct arg_lit *unweighted = arg_lit0(NULL, "unweighted", "Parse hypergraph as unweighted. Default: false.");
 
     BaseArgtable(bool isStaticHypergraph = true) : isStaticHypergraph(isStaticHypergraph) {};
 
     std::vector<void *> to_vector()
     {
-        std::vector<void *> argtable = {help, hypergraphFileName, hypergraphFileFormat, seed};
+        std::vector<void *> argtable = {help, hypergraphFileName, hypergraphFileFormat, seed, unweighted};
         if (isStaticHypergraph)
             argtable.push_back(presetType);
 #ifdef SMHM_PARALLEL
@@ -46,6 +47,7 @@ struct BaseArgtable
     {
         config.hypergraphFileName = hypergraphFileName->sval[0]; // hypergraphFileName is a required argument
         config.seed = (seed->count > 0) ? seed->ival[0] : DEFAULT_SEED;
+        config.unweighted = (unweighted->count > 0) ? true : DEFAULT_UNWEIGHTED;
 
 #ifdef SMHM_PARALLEL
         config.numThreads = (numThreads->count > 0) ? numThreads->ival[0] : DEFAULT_PARALLEL_NUM_THREADS;
