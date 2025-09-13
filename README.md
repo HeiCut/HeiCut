@@ -200,18 +200,15 @@ Example (tight ordering):
 ---
 
 ## Reproducing Paper Results
-In the experimental section of our paper, we provide results seperated by dataset. More specifically, we perform the following experiments:
-- Medium Dataset `M_{HG}`: Weighted and Unweighted
-- Large Dataset `L_{HG}`: Weighted and Unweighted
-- $(k, 2)$-core Dataset: Weighted and Unweighted
+In the experimental section of our paper, we provide results seperated by dataset.
 
 ### Benchmark Datasets
 
 We evaluate on three datasets:  
 
-- **M<sub>HG</sub>** (488 medium instances)  
-- **L<sub>HG</sub>** (94 large instances, up to 139M vertices)  
-- **(k,2)-core** (44 synthetic instances with non-trivial cuts)  
+- **M<sub>HG</sub>** (488 medium instances): Weighted and Unweighted
+- **L<sub>HG</sub>** (94 large instances, up to 139M vertices): Weighted and Unweighted  
+- **(k,2)-core** (44 synthetic instances with non-trivial cuts): Weighted and Unweighted  
 
 Download all datasets here:  
 [📂 Google Drive Link](https://drive.google.com/drive/folders/1DkGrmtd73nHMz2DzE0zsS175gNmD3qVU?usp=sharing)
@@ -234,7 +231,7 @@ Scripts are located in `/HeiCut/experiments/`, organized per dataset:
 - `large_weighted`, `large_unweighted`  
 - `k-core_weighted`, `k-core_unweighted`
 
-Each folder contains a master script (e.g., `perform_medium_weighted_experiments.sh`). 
+Each folder contains a master script that you should run (e.g., `perform_medium_weighted_experiments.sh`). 
 
 **Note:** we also provide a global script to run all experiments on all datasets called `perform_all_experiments.sh`. However, we do not recommend using it since it would be simply too time consuming.
 
@@ -267,9 +264,14 @@ Each algorithm produces:
 
 Example:  
 - `/kernelizer_IT0/all_results.csv` (HeiCut, no LP)  
-- `/kernelizer_IT1/all_results.csv` (HeiCut, with LP)  
+- `/kernelizer_IT1/all_results.csv` (HeiCut, with LP)
+- `/ilp/all_results.csv` (Relaxed-BIP)
+- `/trimmer/all_results.csv` (Trimmer)
+- `/submodular_tight_single/all_results.csv` (Tight vertex-ordering solver)
 
-In the output `all_results.csv` for each algorithm, each row contains the statistics for an instance. The first three columns correspond to minimum cut, time, and memory respectively. If an algorithm fails on an instance, the minimum cut, time, and memory columns are blank. 
+
+
+In the output `all_results.csv` for each algorithm, each row contains the statistics for an instance. The first three columns correspond to minimum cut, time, and memory respectively. If an algorithm fails on an instance, the minimum cut column is blank. All algorithms except Relaxed-BIP return the exact minimum cut if successful.  
 
 ---
 
