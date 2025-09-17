@@ -3,6 +3,7 @@
 ![C++17](https://img.shields.io/badge/C++-17-blue.svg?style=flat)  
 ![Linux](https://img.shields.io/badge/OS-Linux-green.svg?style=flat)  
 ![ALENEX](https://img.shields.io/badge/Conference-ALENEX%2026-orange.svg?style=flat)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17140473.svg)](https://doi.org/10.5281/zenodo.17140473)
 
 ---
 
@@ -15,11 +16,13 @@ The algorithm performs repeated rounds of **provably exact reduction rules** tha
 HeiCut is presented in the paper:  
 > *Exact Minimum Cuts in Hypergraphs at Scale*, ALENEX 2026.
 
-The GitHub repository (https://github.com/HeiCut/HeiCut.git) provides:
+This repository provides:
 - Source code for **HeiCut**  
 - Implementations of competing algorithms: **Trimmer**, **Relaxed BIP**, and **ordering-based solvers**  
 - Benchmark datasets (`M_{HG}`, `L_{HG}`, and $(k,2)$-core)  
-- Scripts to **reproduce all experimental results** from the paper  
+- Scripts to **reproduce all experimental results** from the paper
+
+The source code and benchmark datasets are permanently archived on [Zenodo Software](https://doi.org/10.5281/zenodo.17140473) and [Zenodo Dataset](https://doi.org/10.5281/zenodo.17142170) to ensure long-term availability.
 
 ---
 
@@ -211,7 +214,7 @@ We evaluate on three datasets:
 - **(k,2)-core** (44 synthetic instances with non-trivial cuts): Weighted and Unweighted  
 
 Download all datasets here:  
-[📂 Google Drive Link](https://drive.google.com/drive/folders/1DkGrmtd73nHMz2DzE0zsS175gNmD3qVU?usp=sharing)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17142170.svg)](https://doi.org/10.5281/zenodo.17142170)
 
 Extract into the repository root (`/HeiCut/`):  
 
