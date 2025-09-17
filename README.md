@@ -3,7 +3,7 @@
 ![C++17](https://img.shields.io/badge/C++-17-blue.svg?style=flat)  
 ![Linux](https://img.shields.io/badge/OS-Linux-green.svg?style=flat)  
 ![ALENEX](https://img.shields.io/badge/Conference-ALENEX%2026-orange.svg?style=flat)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17140473.svg)](https://doi.org/10.5281/zenodo.17140473)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17140472.svg)](https://doi.org/10.5281/zenodo.17140472)
 
 ---
 
@@ -22,7 +22,7 @@ This repository provides:
 - Benchmark datasets (`M_{HG}`, `L_{HG}`, and $(k,2)$-core)  
 - Scripts to **reproduce all experimental results** from the paper
 
-The source code and benchmark datasets are permanently archived on [Zenodo Software](https://doi.org/10.5281/zenodo.17140473) and [Zenodo Dataset](https://doi.org/10.5281/zenodo.17142170) to ensure long-term availability.
+The source code and benchmark datasets are permanently archived on [Zenodo Software](https://doi.org/10.5281/zenodo.17140472) and [Zenodo Dataset](https://doi.org/10.5281/zenodo.17142170) to ensure long-term availability.
 
 ---
 
