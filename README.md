@@ -35,7 +35,8 @@ HeiCut requires the following:
 - [CMake][cmake] (≥ 3.16)  
 - [Boost.Program_options][Boost.Program_options] (≥ 1.48)  
 - [oneTBB][tbb] (≥ 2021.5.0)  
-- [hwloc][hwloc]  
+- [hwloc][hwloc]
+- [SparseHash](https://github.com/sparsehash/sparsehash) 
 - [Gurobi](https://www.gurobi.com/) (used as LP solver)  
 - [Mt-KaHyPar](https://github.com/kahypar/mt-kahypar/tree/0ef674ad44c35fb4f601a7eddd3f4f23f0d5d60a), commit `0ef674a`  
 
@@ -81,6 +82,14 @@ sudo cmake --build .
 sudo cmake --install .
 ```
 
+To install [sparsehash](https://github.com/sparsehash/sparsehash), follow these instructions:
+```bash
+git clone https://github.com/sparsehash/sparsehash
+cd sparsehash
+./configure
+make install
+```
+
 ---
 
 ### Gurobi
@@ -89,9 +98,10 @@ HeiCut uses **Gurobi** as its LP solver.
 
 1. Create a [Gurobi account](https://www.gurobi.com/).  
 2. Download [Gurobi for Linux](https://www.gurobi.com/downloads/gurobi-software/).  
-3. Follow the [installation guide](https://support.gurobi.com/hc/en-us/articles/4534161999889-How-do-I-install-Gurobi-Optimizer).  
-4. Place your `gurobi.lic` license file in the installation folder (e.g., `/opt/gurobi1203/`).  
-5. Add environment variables (update path if needed):  
+3. Follow the [installation guide](https://support.gurobi.com/hc/en-us/articles/4534161999889-How-do-I-install-Gurobi-Optimizer).
+4. Obtain a license to use Gurobi. For instance, you can get a free academic license by following the [official guide](https://www.gurobi.com/academia/academic-program-and-licenses/). 
+5. Place your `gurobi.lic` license file in the installation folder (e.g., `/opt/gurobi1203/`).  
+6. Add environment variables (update path if needed):  
 
 ```bash
 export GUROBI_HOME="/opt/gurobi1203/linux64"
@@ -127,9 +137,44 @@ make install.mtkahypar   # may need sudo
 Locate `libmtkahypar.so` (usually in `build/lib/`) and copy it into:  
 `HeiCut/extern/mt-kahypar-library/`.
 
+#### ⚠️ Known issue (rare): `growt` ref/_mref compilation error
+
+A few users have encountered a **compilation error in Mt-KaHyPar’s `growt` dependency** that looks like:
+
+```
+.../external_tools/growt/data-structures/migration_table_iterator.hpp:68:22: error:
+‘... migration_table_mapped_reference ...’ has no member named ‘ref’; did you mean ‘_mref’?
+68 |                 sref.ref.refresh();
+|                      ^~~
+|                      _mref
+```
+
+If you see this, from your mtkahypar source folder, ensure you have the correct growt dependency by calling 
+```bash
+git submodule update --init --recursive
+```
+If it still does not compile, apply the following **manual fix** in the `growt` source and rebuild:
+
+1. Open:
+```
+<your-mtkahypar-source>/external_tools/growt/data-structures/migration_table_iterator.hpp
+````
+
+2. In the class `migration_table_mapped_reference`, **edit the constructor’s initializer list**:
+
+change
+```cpp
+: _tab(table), _version(ver), _mref(mref)
+````
+to
+```cpp
+: _tab(table), _version(ver), _mref(mref), ref(_mref)
+```
+
+3. Rebuild Mt-KaHyPar (or rerun your previous build command)
 ---
 
-## Build
+## Building HeiCut
 
 After installing all dependencies:
 
@@ -238,10 +283,11 @@ Each folder contains a master script that you should run (e.g., `perform_medium_
 
 **Note:** we also provide a global script to run all experiments on all datasets called `perform_all_experiments.sh`. However, we do not recommend using it since it would be simply too time consuming.
 
-> **Dependency:** [GNU parallel](https://www.gnu.org/software/parallel/)  
+> **Dependency:** [GNU parallel](https://www.gnu.org/software/parallel/) and [GNU Time](https://www.gnu.org/software/time/)
+> 
 > Install on Ubuntu:  
 > ```bash
-> sudo apt install parallel
+> sudo apt install parallel time
 > ```
 
 ---
@@ -278,24 +324,59 @@ In the output `all_results.csv` for each algorithm, each row contains the statis
 
 ---
 
-### Plotting Results
+### 📊 Plotting Experimental Results
 
-The paper showcases experimental results in performance profiles. While the performance profiles used in the paper and very complicated due to varying x-axis scaling, it is possible to generate simpler performance profile plots using the script provided in the experiments folder:
+Each experimental dataset folder — for example:
+```
+experiments/medium_weighted
+```
+contains a subfolder:
+```
+experiments/medium_weighted/plot
+````
+Once you have completed running all experiments and generated the result files, you can produce the **final performance profile plots** exactly as shown in the paper. Note: all algorithms should have attempted to solve each instance and reported their attempt in its all_results.csv, i.e, there may not be missing rows in any CSV. 
 
+#### 🧭 How to plot
+
+1. Navigate to the `plot` directory of the dataset:
 ```bash
-python3 plot_results.py --data-dir <dataset>/generated/all_results/
+  cd experiments/medium_weighted/plot
 ```
 
-Replace the path with the `all_results` folder of the dataset you wish to plot.  
+2. Run the plotting script:
+ ```bash
+ ./plot_all.sh
+ ```
+This will generate **performance profile plots** comparing all algorithms on:
 
-- The script produces a **PDF performance profile** saved in the same folder as `plot_results.py`.  
-- Run the script separately for each dataset (`medium_weighted`, `large_weighted`, `k-core_weighted`, etc.).  
+* **Memory usage**
+* **Runtime**
+* **Minimum cut**
 
-#### Requirements
-The plotting script depends on the following Python packages:
+The resulting plot corresponds to the dataset associated with the current folder (e.g., `medium_weighted`) and replicates the paper’s figure format.
 
-```bash
-pip install numpy pandas matplotlib
+---
+
+#### 📦 Plotting Dependencies
+
+The plotting pipeline relies on:
+
+* **R** (tested with R 4.3+)
+* **LaTeX** with TikZ support
+  (ensure `tikzDevice` can compile LaTeX files — a minimal TeX Live installation is sufficient)
+
+The following R packages are required:
+```
+ggplot2, plyr, dplyr, RColorBrewer, tikzDevice,
+gridExtra, egg, ggpubr, stringr, stringi, ggrepel
+```
+The R plotting scripts will **automatically attempt to install missing dependencies**.
+However, if something goes wrong (e.g., due to system library issues like ICU), simply install the required packages manually:
+```r
+install.packages(c(
+  "ggplot2","plyr","dplyr","RColorBrewer","tikzDevice",
+  "gridExtra","egg","ggpubr","stringr","stringi","ggrepel"
+), repos = "https://cloud.r-project.org")
 ```
 
 ---
