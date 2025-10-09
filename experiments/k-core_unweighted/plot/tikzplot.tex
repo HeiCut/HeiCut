@@ -1,0 +1,16 @@
+\documentclass[varwidth=24cm,border=2mm]{standalone} % bump to 24cm or more
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{graphicx}
+
+\begin{document}
+\begin{minipage}{\linewidth}
+  \centering
+  \input{perf_kcore_unw.tex}
+
+  \par\vspace{0.3cm}
+
+  \resizebox{0.55\linewidth}{!}{\input{perf_kcore_unw_legend.tex}}
+\end{minipage}
+\end{document}

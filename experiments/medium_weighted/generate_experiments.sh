@@ -20,7 +20,7 @@ PATH_TO_GENERATED_EXPERIMENTS_FOLDER=`cat paths/path_to_generated_experiments_fo
 PATH_TO_ALGORITHMS=`cat paths/path_to_algorithms.txt`;
 
 # List of algorithms
-ALGORITHMS="kernelizer, submodular, ilp" # Possible algorithms: ilp, kernelizer, submodular, trimmer, kcore_generator
+ALGORITHMS="kernelizer submodular ilp" # Possible algorithms: ilp, kernelizer, submodular, trimmer, kcore_generator
 
 # List of number of label propagation iterations (only for kernelizer and kernelizer_parallel)
 LP_NUM_ITERATIONS="0 1";
