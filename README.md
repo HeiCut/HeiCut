@@ -46,21 +46,11 @@ Detailed installation instructions are provided below.
 
 ## Getting Started
 
-Clone the repository **with submodules**:
-
-```bash
-git clone https://github.com/HeiCut/HeiCut.git --depth 2 --recursive
-```
-
-Alternatively:
+Clone the repository **with pre-loaded submodules** (extern/kahypar-shared-resources and extern/mt-kahypar):
 
 ```bash
 git clone https://github.com/HeiCut/HeiCut.git
-cd HeiCut
-git submodule update --init --recursive
 ```
-
-This will fetch both `mt-kahypar` and `kahypar-shared-resources`.
 
 ---
 
@@ -149,11 +139,7 @@ A few users have encountered a **compilation error in Mt-KaHyPar’s `growt` dep
 |                      _mref
 ```
 
-If you see this, from your mtkahypar source folder, ensure you have the correct growt dependency by calling 
-```bash
-git submodule update --init --recursive
-```
-If it still does not compile, apply the following **manual fix** in the `growt` source and rebuild:
+If you see this, and the program does not compile, apply the following **manual fix** in the `growt` source and rebuild:
 
 1. Open:
 ```
@@ -162,7 +148,7 @@ If it still does not compile, apply the following **manual fix** in the `growt` 
 
 2. In the class `migration_table_mapped_reference`, **edit the constructor’s initializer list**:
 
-change
+change (possibly line 57) 
 ```cpp
 : _tab(table), _version(ver), _mref(mref)
 ````
@@ -171,7 +157,13 @@ to
 : _tab(table), _version(ver), _mref(mref), ref(_mref)
 ```
 
-3. Rebuild Mt-KaHyPar (or rerun your previous build command)
+3. Insert (possibly line 133): 
+```cpp
+public:
+   base_mapped_reference& ref;
+````
+
+4. Rebuild Mt-KaHyPar (or rerun your previous build command)
 ---
 
 ## Building HeiCut
