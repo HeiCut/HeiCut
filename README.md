@@ -257,7 +257,7 @@ Extract into the repository root (`/HeiCut/`):
 
 - `/HeiCut/med_set/`  
 - `/HeiCut/large_set/`  
-- `/HeiCut/k,2-core_benchmark/`  
+- `/HeiCut/k,2-core_benchmark/`
 
 **Note**: To save on time and disk space, we only provide weighted versions of the hypergraphs. For reproducing results on the unweighted versions, we pass a flag `--unweighted` to each algorithm to process the weighted hypergraphs as an unweighted (set all edge weights to 1). 
 
@@ -271,7 +271,8 @@ Scripts are located in `/HeiCut/experiments/`, organized per dataset:
 - `large_weighted`, `large_unweighted`  
 - `k-core_weighted`, `k-core_unweighted`
 
-Each folder contains a master script that you should run (e.g., `perform_medium_weighted_experiments.sh`). 
+Each folder contains a master script that you should run (e.g., `perform_medium_weighted_experiments.sh`). **Important**: If you wish to use our experimental and plotting scripts, avoid using special characters (e.g., spaces, #, %, &) in the HeiCut directory path. Such characters can break file-path parsing in the experimental/plotting scripts and lead to runtime errors.
+
 
 **Note:** we also provide a global script to run all experiments on all datasets called `perform_all_experiments.sh`. However, we do not recommend using it since it would be simply too time consuming.
 
@@ -355,7 +356,7 @@ The plotting pipeline relies on:
 
 * **R** (tested with R 4.3+)
 * **LaTeX** with TikZ support
-  (ensure `tikzDevice` can compile LaTeX files — a minimal TeX Live installation is sufficient)
+  (ensure `tikzDevice` can compile LaTeX files — we suggest a **full texlive installation** for a smoother experience)
 
 The following R packages are required:
 ```
